@@ -10,13 +10,16 @@ const sampleResult={
     posterUrl:"https://www.imdb.com/title/tt13320622/mediaviewer/rm3056854785/?ref_=tt_ov_i"
 
 };
-async function scarpTitlesRanksAndRaating (){
+async function scarpTitlesRanksAndRating (){
 const result= await request.get("https://www.imdb.com/chart/moviemeter/?ref_=nv_mv_mpm");
 const $=await cheerio.load(result);
-const movie =$("td.titleColumn > a").map((i,element)=>{
-return($(element).text())
+const movie =$("tr").map((i,element)=>{
+
+const title=$(element).find("td.titleColumn > a").text();
+const ratingMovie=$(element).find("td.ratingColumn.imdbRating").text().trim();
+return{title,ratingMovie}
 }).get();
 console.log(movie)
 }
 
-scarpTitlesRanksAndRaating();
+scarpTitlesRanksAndRating();
