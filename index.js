@@ -16,8 +16,10 @@ const $=await cheerio.load(result);
 const movie =$("tr").map((i,element)=>{
 
 const title=$(element).find("td.titleColumn > a").text();
+const descriptionMovie="https://www.imdb.com"+$(element).find("td.titleColumn > a").attr("href");
+
 const ratingMovie=$(element).find("td.ratingColumn.imdbRating").text().trim();
-return{title,ratingMovie}
+return{title,ratingMovie,rank:i,descriptionMovie}
 }).get();
 console.log(movie)
 }
